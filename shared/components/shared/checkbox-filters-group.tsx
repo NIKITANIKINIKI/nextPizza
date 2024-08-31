@@ -8,87 +8,30 @@ type Item = FilterChecboxProps;
 
 interface Props {
   title: string;
-  //   items: Item[];
-  defaultItems?: Item[];
-  limit?: number;
-  loading?: boolean;
+  items: Item[];
+  defaultItems: Item[];
+  limit: number;
   searchInputPlaceholder?: string;
   onClickCheckbox?: (id: string) => void;
   defaultValue?: string[];
   selected?: Set<string>;
   className?: string;
-  name?: string;
+  name: string;
+  isLoading: boolean
 }
 
-const items = [
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-  {
-    text: "828282828",
-    value: "30300303030",
-  },
-];
 
 export const CheckboxFiltersGroup: React.FC<Props> = ({
   className,
   title,
   limit = 5,
   searchInputPlaceholder,
+  items
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchValue, setSearchValue] = React.useState("");
   const list = isOpen
-    ? items.filter((value) =>
+    ? items.filter((value) => value && value.text &&
         value.text.includes(searchValue.toLocaleLowerCase())
       )
     : items.slice(0, limit);

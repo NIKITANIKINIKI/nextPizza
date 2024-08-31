@@ -7,6 +7,7 @@ import { useClickAway, useDebounce } from "react-use";
 import { Product } from "@prisma/client";
 import Link from "next/link";
 import { Api } from "@/services/api-client";
+import {X} from 'lucide-react'
 
 interface SearchInputProps {
   className?: string;
@@ -39,7 +40,11 @@ export const SearchInput: React.FC<SearchInputProps> = ({ className }) => {
   const onClickProduct=()=>{
     setFocused(false)
     setSearchQuery('')
+    setProducts([])
+  }
 
+  const onClickRemove=()=>{
+    setSearchQuery('')
   }
 
   return (
@@ -56,12 +61,17 @@ export const SearchInput: React.FC<SearchInputProps> = ({ className }) => {
       >
         <Search className="absolute top-1/2 translate-y-[-50%] left-3" />
         <input
+          value={searchQuery}
           type="text"
           placeholder="Найти пиццу..."
           className="outline-none w-full bg-gray-100 rounded-2xl pl-10"
           onFocus={() => setFocused(true)}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
+        {searchQuery &&  
+        <X className="absolute top-1/2 translate-y-[-50%] right-2 opacity-50 cursor-pointer" onClick={onClickRemove}/>        
+        
+        }
         {
             products?.length>0 &&(
               <div

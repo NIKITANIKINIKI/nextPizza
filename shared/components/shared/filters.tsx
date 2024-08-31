@@ -1,15 +1,22 @@
+'use client'
+
 import React from "react";
 import { Title } from "./title";
 import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui/input";
 import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
+import { useIngredients } from "@/shared/hooks/use-ingredients";
 
 interface Props {
   className?: string;
 }
 
 export const Filters: React.FC<Props> = ({ className }) => {
+  const { ingredients, isLoading } = useIngredients();
+
+  const items=ingredients.map((el) => ({value: String(el.id), text: String(el.name)}))
+
   return (
     <div className={className}>
       <Title text="Фильтрация" className="mb-5 font-bold" />
@@ -38,7 +45,15 @@ export const Filters: React.FC<Props> = ({ className }) => {
         </div>
         <RangeSlider min={0} max={1000} step={10} />
       </div>
-      <CheckboxFiltersGroup title='Ингридиенты' searchInputPlaceholder='Поиск' />
+      <CheckboxFiltersGroup
+        title="Ингредиенты"
+        name="ingredients"
+        limit={6}
+        defaultItems={items.slice(0, 6)}
+        items={items}
+        isLoading={isLoading}
+        // onClickCheckbox={filters.setSelectedIngredients}
+      />
     </div>
   );
 };
