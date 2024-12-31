@@ -3,8 +3,10 @@
 import React, { useState } from "react";
 import { FilterChecboxProps, FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui/input";
+import { Skeleton } from "../ui/skeleton";
 
 type Item = FilterChecboxProps;
+
 
 interface Props {
   title: string;
@@ -16,23 +18,28 @@ interface Props {
   defaultValue?: string[];
   selected?: Set<string>;
   className?: string;
-  name: string;
-  isLoading: boolean
+  isLoading: boolean;
+  name?: string
 }
-
 
 export const CheckboxFiltersGroup: React.FC<Props> = ({
   className,
   title,
   limit = 5,
   searchInputPlaceholder,
-  items
+  items,
+  isLoading,
+  onClickCheckbox,
+  selected
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchValue, setSearchValue] = React.useState("");
   const list = isOpen
-    ? items.filter((value) => value && value.text &&
-        value.text.includes(searchValue.toLocaleLowerCase())
+    ? items.filter(
+        (value) =>
+          value &&
+          value.text &&
+          (value.text).toLowerCase().includes(searchValue.toLowerCase())
       )
     : items.slice(0, limit);
 
@@ -40,11 +47,26 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
     setSearchValue(e.target.value);
   };
 
+  if (isLoading) {
+    return (
+      <div>
+        <p className="font-bold py-3">{title}</p>
+
+        {...Array(limit)
+          .fill(0)
+          .map((_, index) => (
+            <Skeleton key={index} className="max-w h-6 mb-4 max-h-96 rounded-[8px]" />
+          ))}
+          <Skeleton className="w-28 h-6 mb-4 rounded-[8px]" />
+      </div>
+    );
+  }
+
   return (
     <div className={className}>
-      <p className="py-3">{title}</p>
+      <p className="font-bold py-3">{title}</p>
       {isOpen && (
-        <div className="py-3">
+        <div className="pb-3">
           <Input
             onChange={onChangeSearchInput}
             placeholder={searchInputPlaceholder}
@@ -53,8 +75,8 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
         </div>
       )}
       <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
-        {list.map((el, index) => (
-          <FilterCheckbox key={index} text={el.text} value={el.value} />
+        {list && list.map((el, index) => (
+          <FilterCheckbox key={index} name={el.name} text={el.text} value={el.value} checked={selected?.has(el.value)} onCheckedChange={() =>onClickCheckbox?.(el.value) }/>
         ))}
       </div>
       {list.length + 1 > limit && (
