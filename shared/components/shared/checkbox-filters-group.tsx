@@ -12,13 +12,13 @@ interface Props {
   title: string;
   items: Item[];
   defaultItems: Item[];
-  limit: number;
+  limit?: number;
   searchInputPlaceholder?: string;
   onClickCheckbox?: (id: string) => void;
   defaultValue?: string[];
   selected?: Set<string>;
   className?: string;
-  isLoading: boolean;
+  isLoading?: boolean;
   name?: string
 }
 
@@ -76,7 +76,7 @@ export const CheckboxFiltersGroup: React.FC<Props> = ({
       )}
       <div className="flex flex-col gap-4 max-h-96 pr-2 overflow-auto scrollbar">
         {list && list.map((el, index) => (
-          <FilterCheckbox key={index} name={el.name} text={el.text} value={el.value} checked={selected?.has(el.value)} onCheckedChange={() =>onClickCheckbox?.(el.value) }/>
+          <FilterCheckbox key={index} name={el.name} text={el.text} value={el.value} checked={selected?.has(String(el.value))} onCheckedChange={() =>onClickCheckbox?.(String(el.value)) }/>
         ))}
       </div>
       {list.length + 1 > limit && (

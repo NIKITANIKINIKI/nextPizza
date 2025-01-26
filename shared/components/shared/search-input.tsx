@@ -34,7 +34,7 @@ export const SearchInput: React.FC<SearchInputProps> = ({ className }) => {
       }
     },
     250,
-    [searchQuery]
+    [searchQuery, focused]
   );
 
   const onClickProduct=()=>{
@@ -72,8 +72,8 @@ export const SearchInput: React.FC<SearchInputProps> = ({ className }) => {
         <X className="absolute top-1/2 translate-y-[-50%] right-2 opacity-50 cursor-pointer" onClick={onClickRemove}/>        
         
         }
-        {
-            products?.length>0 &&(
+        {products
+            ?.length>0 &&(
               <div
               className={cn(
                 "absolute w-full bg-white rounded-l-2xl top-14 shadow-md transition-all duration-200 invisible opacity-0 z-30 h-[200px] overflow-y-auto scrollbar",

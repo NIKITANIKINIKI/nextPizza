@@ -2,12 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import { Title } from "./title";
-import { FilterCheckbox } from "./filter-checkbox";
 import { Input } from "../ui/input";
 import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { useIngredients } from "@/shared/hooks/use-ingredients";
-import { useSearchParams } from 'next/navigation';
 import { useSet } from 'react-use';
 import qs from 'qs'
 import { useRouter } from "next/navigation"; // важно!
@@ -66,15 +64,15 @@ export const Filters: React.FC<Props> = ({ className }) => {
       
       <Title text="Фильтрация" className="mb-5 font-bold" />
 
-      <CheckboxFiltersGroup
+      {/* <CheckboxFiltersGroup
         title="Тип теста"
         name="pizzaTypes"
         className="mb-5"
         onClickCheckbox={togglePizzaTypes}
         selected={pizzaTypes}
         items={[
-          { text: 'Тонкое', value: '1' },
-          { text: 'Традиционное', value: '2' },
+          { text: 'Тонкое', value: '1'},
+          { text: 'Традиционное', value: '2'},
         ]}
       />
       <CheckboxFiltersGroup
@@ -88,7 +86,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
           { text: '30 см', value: '30' },
           { text: '40 см', value: '40' },
         ]}
-      />
+      /> */}
 
       <div className="flex flex-col gap-3 mt-3 border-y border-y-neutral-100 py-5">
         <p>Цены от и до:</p>

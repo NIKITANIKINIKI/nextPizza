@@ -10,34 +10,45 @@ import { TopBar } from "@/shared/components/shared/top-bar";
 
 export default async  function Home() {
 
+  const categories=await prisma.category.findMany({
+    include:{
+      products:{
+        include:{
+          ingredients: true,
+          items: true
+        }
+
+      }
+    }
+  })
+
 
   return (
     <>
-      <Container className=" mt-10 ">
+      <Container className=" mt-5 ">
         <Title text="Все пиццы" size="lg" className="font-extrabold" />
       </Container>
-      <TopBar/>
-      
-      <Container className="mt-5">
+      <TopBar categories={categories.filter(category => category.products.length>0)}/>
+      <Container className="mt-5 mb-6">
         <div className="flex gap-[60px]">
           <div className="w-[250px]">
             <Filters />
           </div>
           <div>
             <div className="flex-1">
-              {/* <div>
-              {pizzas.map(
-                (pizza) =>
-                  pizza.length > 0 && (
+              <div className="flex flex-col gap-16">
+              {categories.map(
+                (category) =>
+                  category.products.length > 0 && (
                     <ProductsGroupList
-                      key={pizza.id}
-                      title={pizza.name}
-                      categoryId={pizza.id}
-                      items={pizza.products}
+                      key={category.id}
+                      title={category.name}
+                      categoryId={category.id}
+                      items={category.products}
                     />
                   ),
               )}
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
