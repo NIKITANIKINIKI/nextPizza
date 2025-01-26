@@ -25,7 +25,7 @@ export const Categories: React.FC<Props> = ({ className, categories }) => {
           className={cn(
             "flex items-center font-bold h-11 rounded-2xl px-5",
             currentCategoryId == category.id &&
-              "bg-white shadow-md shadow-gray-200 text-primary"
+              "bg-white shadow-md shadow-gray-200 text-primary",
           )}
           href={`/#${category.name}`}
         >

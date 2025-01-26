@@ -3,7 +3,7 @@ import React from "react";
 import { Container } from "./container";
 import Image from "next/image";
 import { Button } from "../ui/button";
-import { ArrowRight,ShoppingCart, User } from "lucide-react";
+import { ArrowRight, ShoppingCart, User } from "lucide-react";
 import { SearchInput } from "./search-input";
 import Link from "next/link";
 
@@ -18,15 +18,17 @@ export const Header: React.FC<Props> = ({ className }) => {
         <div className="flex items-center gap-3">
           <Image src="/logo.png" alt="Logo" width={35} height={35} />
           <div>
-            <Link href='/'>
-            <h1 className="text-2xl uppercase font-black">Pizza от Маги</h1>
-            <p className="text-sm text-gray-400 leading-3">попробуй Магу на вкус</p>
+            <Link href="/">
+              <h1 className="text-2xl uppercase font-black">Pizza от Маги</h1>
+              <p className="text-sm text-gray-400 leading-3">
+                попробуй Магу на вкус
+              </p>
             </Link>
           </div>
         </div>
 
         <div className="mx-10 flex-1">
-          <SearchInput/>
+          <SearchInput />
         </div>
 
         <div className="flex items-center gap-3">
@@ -35,18 +37,20 @@ export const Header: React.FC<Props> = ({ className }) => {
             Войти
           </Button>
           <div>
-          <Button className="group relative">
-            <b>520 ₽</b>
-            <span className="h-full w-[1px] bg-white/50 mx-3"/>
-            <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
-              <ShoppingCart size={16} className="relative" strokeWidth={2} />
-              <b>3</b>
-            </div>
-            <ArrowRight size={20} className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0" />
-          </Button>
+            <Button className="group relative">
+              <b>520 ₽</b>
+              <span className="h-full w-[1px] bg-white/50 mx-3" />
+              <div className="flex items-center gap-1 transition duration-300 group-hover:opacity-0">
+                <ShoppingCart size={16} className="relative" strokeWidth={2} />
+                <b>3</b>
+              </div>
+              <ArrowRight
+                size={20}
+                className="absolute right-5 transition duration-300 -translate-x-2 opacity-0 group-hover:opacity-100 group-hover:translate-x-0"
+              />
+            </Button>
+          </div>
         </div>
-        </div>
-        
       </Container>
     </header>
   );

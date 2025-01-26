@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { ProductCard } from "./product-card";
 import { ProductWithRelations } from "@/@types/prisma";
@@ -16,32 +16,30 @@ interface ProductsGroupList {
 }
 
 export const ProductsGroupList: React.FC<ProductsGroupList> = ({
-    title,
-    items,
-    className,
-    listClassName,
-    categoryId
-  }) => {
+  title,
+  items,
+  className,
+  listClassName,
+  categoryId,
+}) => {
+  const { setCategoryId } = useCategoryStore();
 
-    const {setCategoryId}=useCategoryStore()
+  const intersectionRef = React.useRef<HTMLDivElement>(null);
+  const intersection = useIntersection(intersectionRef, {
+    threshold: 0.4,
+  });
 
-    const intersectionRef = React.useRef<HTMLDivElement>(null);
-    const intersection = useIntersection(intersectionRef, {
-      threshold: 0.4,
-    });
+  React.useEffect(() => {
+    if (intersection?.isIntersecting) {
+      setCategoryId(categoryId);
+      console.log(categoryId);
+    }
+  }, [intersection?.isIntersecting]);
 
-    React.useEffect(() => {
-      if(intersection?.isIntersecting){
-        setCategoryId(categoryId)
-        console.log(categoryId)
-      }
-    }, [intersection?.isIntersecting])
-
-  return(
+  return (
     <div className={className} id={title} ref={intersectionRef}>
-      <Title text={title} size='lg' className="font-extrabold mb-5"/>
-    <div className={cn('grid grid-cols-3 gap-[40px]', listClassName)}>
-
+      <Title text={title} size="lg" className="font-extrabold mb-5" />
+      <div className={cn("grid grid-cols-3 gap-[40px]", listClassName)}>
         {items.map((product) => (
           <ProductCard
             key={product.id}
@@ -52,7 +50,7 @@ export const ProductsGroupList: React.FC<ProductsGroupList> = ({
             ingredients={product.ingredients}
           />
         ))}
-    </div>
+      </div>
     </div>
   );
 };
