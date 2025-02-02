@@ -5,10 +5,6 @@ import { Header } from "@/shared/components/shared/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Новая пицца",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -17,10 +13,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="min-h-screen">
-          <Header />
-          {children}
-        </main>
+        {children}
       </body>
     </html>
   );
