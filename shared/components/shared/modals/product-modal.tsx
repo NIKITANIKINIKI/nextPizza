@@ -24,7 +24,7 @@ export const ProductModal: FC<ProductModalProps> = ({ className, product }) => {
     >
       <DialogContent
         className={cn(
-          "flex  justify-center max-w-[70vw] h-[70vh] overflow-hidden border-none  ",
+          "flex  justify-center max-w-[1300px] max-h-[750px] overflow-hidden border-none  ",
           className,
         )}
       >

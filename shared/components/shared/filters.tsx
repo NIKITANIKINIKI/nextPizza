@@ -28,10 +28,10 @@ export const Filters: React.FC<Props> = ({ className }) => {
     priceTo: 1000,
   });
 
-  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
-  const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-    new Set<string>([]),
-  );
+  // const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
+  // const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
+  //   new Set<string>([]),
+  // );
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices({
@@ -40,18 +40,18 @@ export const Filters: React.FC<Props> = ({ className }) => {
     });
   };
 
-  useEffect(() => {
-    const filters = {
-      ...prices,
-      pizzaTypes: Array.from(pizzaTypes),
-      sizes: Array.from(sizes),
-      ingredients: Array.from(selectedIds),
-    };
+  // useEffect(() => {
+  //   const filters = {
+  //     ...prices,
+  //     pizzaTypes: Array.from(pizzaTypes),
+  //     sizes: Array.from(sizes),
+  //     ingredients: Array.from(selectedIds),
+  //   };
 
-    const query = qs.stringify(filters, { arrayFormat: "comma" });
+  //   const query = qs.stringify(filters, { arrayFormat: "comma" });
 
-    router.push(`?${query}`, { scroll: false });
-  }, [sizes, pizzaTypes, prices, selectedIds]);
+  //   router.push(`?${query}`, { scroll: false });
+  // }, [sizes, pizzaTypes, prices, selectedIds]);
 
   console.log(selectedIds);
 

@@ -32,25 +32,24 @@ export const ProductsGroupList: React.FC<ProductsGroupList> = ({
   React.useEffect(() => {
     if (intersection?.isIntersecting) {
       setCategoryId(categoryId);
-      console.log(categoryId);
     }
   }, [intersection?.isIntersecting]);
 
   return (
-    <div className={className} id={title} ref={intersectionRef}>
-      <Title text={title} size="lg" className="font-extrabold mb-5" />
-      <div className={cn("grid grid-cols-3 gap-[40px]", listClassName)}>
-        {items.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            name={product.name}
-            imageUrl={product.imageUrl}
-            price={product.items[0].price}
-            ingredients={product.ingredients}
-          />
-        ))}
+      <div className={cn('pt-[100px]', className)} id={title}  ref={intersectionRef} >
+        <Title  text={title} size="lg" className="font-extrabold" />
+        <div className={cn("grid grid-cols-3 gap-[40px]", listClassName)}  >
+          {items.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              name={product.name}
+              imageUrl={product.imageUrl}
+              price={product.items[0].price}
+              ingredients={product.ingredients}
+            />
+          ))}
+        </div>
       </div>
-    </div>
   );
 };
