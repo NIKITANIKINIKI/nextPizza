@@ -8,6 +8,7 @@ import { IngredientItem } from "./ingredients-item";
 import { Button } from "../ui";
 import { mapPizzaSize, mapPizzaType } from "@/shared/constants/pizza";
 import { cn } from "@/lib/utils";
+import { Prosto_One } from "next/font/google";
 
 type PizzaType = 20 | 30 | 40;
 
@@ -19,6 +20,8 @@ interface ChoosePizzaContent {
 export const ChoosePizzaContent: FC<ChoosePizzaContent> = ({ product, className }) => {
   const [size, setSize] = useState<PizzaType>(20);
   const [type, setType] = useState<number>(1);
+
+  const [isDisabled, setIsDisabled]=useState<boolean>(false)
 
   const [selectedIngredients, setSelectedIngredients] = useState<
     typeof product.ingredients
@@ -70,21 +73,26 @@ export const ChoosePizzaContent: FC<ChoosePizzaContent> = ({ product, className 
   };
 
   const countTotalPrice = () => {
+    setIsDisabled(false)
+    const priceOfSelectedPizza =
+    product.items.find(
+      (pizza) => pizza.pizzaType === type && pizza.size === size,
+    )?.price ?? 0;
+
     const sumOfIngredient = selectedIngredients.reduce(
       (sum, priceOfIng) => sum + priceOfIng.price,
       0,
     );
-    const priceOfSelectedPizza =
-      product.items.find(
-        (pizza) => pizza.pizzaType === type && pizza.size === size,
-      )?.price ?? 0;
 
+    if(priceOfSelectedPizza===0){
+      setIsDisabled(true)
+    }
     return sumOfIngredient + priceOfSelectedPizza;
   };
 
   const totalPrice = useMemo(
     () => countTotalPrice(),
-    [selectedIngredients, product, type, size],
+    [selectedIngredients, product, type, size, isDisabled],
   );
 
   return (
@@ -133,7 +141,7 @@ export const ChoosePizzaContent: FC<ChoosePizzaContent> = ({ product, className 
               ))}
             </div>
           </div>
-          <Button>Добавить в корзину за {totalPrice}</Button>
+          <Button disabled={isDisabled}>Добавить в корзину за {totalPrice}</Button>
         </div>
       </div>
     </div>

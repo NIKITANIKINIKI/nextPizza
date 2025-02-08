@@ -9,6 +9,7 @@ import { useIngredients } from "@/shared/hooks/use-ingredients";
 import { useSet } from "react-use";
 import qs from "qs";
 import { useRouter } from "next/navigation"; // важно!
+import { mapPizzaType, pizzaSizes, pizzaTypes } from "@/shared/constants/pizza";
 
 interface Props {
   className?: string;
@@ -28,10 +29,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
     priceTo: 1000,
   });
 
-  // const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
-  // const [pizzaTypes, { toggle: togglePizzaTypes }] = useSet(
-  //   new Set<string>([]),
-  // );
+  const [sizes, { toggle: toggleSizes }] = useSet(new Set<string>([]));
+  const [pizzaType, { toggle: togglePizzaTypes }] = useSet(new Set<string>([]));
 
   const updatePrice = (name: keyof PriceProps, value: number) => {
     setPrices({
@@ -53,27 +52,23 @@ export const Filters: React.FC<Props> = ({ className }) => {
   //   router.push(`?${query}`, { scroll: false });
   // }, [sizes, pizzaTypes, prices, selectedIds]);
 
-  console.log(selectedIds);
 
   const items = ingredients.map((el) => ({
+    name: String(el.name),
     value: String(el.id),
-    text: String(el.name),
   }));
 
   return (
     <div className={className}>
       <Title text="Фильтрация" className="mb-5 font-bold" />
 
-      {/* <CheckboxFiltersGroup
+      <CheckboxFiltersGroup
         title="Тип теста"
         name="pizzaTypes"
         className="mb-5"
         onClickCheckbox={togglePizzaTypes}
-        selected={pizzaTypes}
-        items={[
-          { text: 'Тонкое', value: '1'},
-          { text: 'Традиционное', value: '2'},
-        ]}
+        selected={pizzaType}
+        items={pizzaTypes}
       />
       <CheckboxFiltersGroup
         title="Размеры"
@@ -81,12 +76,8 @@ export const Filters: React.FC<Props> = ({ className }) => {
         className="mb-5"
         onClickCheckbox={toggleSizes}
         selected={sizes}
-        items={[
-          { text: '20 см', value: '20' },
-          { text: '30 см', value: '30' },
-          { text: '40 см', value: '40' },
-        ]}
-      /> */}
+        items={pizzaSizes}
+      />
 
       <div className="flex flex-col gap-3 mt-3 border-y border-y-neutral-100 py-5">
         <p>Цены от и до:</p>

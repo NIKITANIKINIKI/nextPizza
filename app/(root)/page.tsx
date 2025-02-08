@@ -30,12 +30,11 @@ export default async function Home() {
       />
       <Container className="mt-5 mb-6">
         <div className="flex gap-[60px]">
-          <div className="w-[250px]">
+          <div className="w-[350px]">
             <Filters />
           </div>
           <div>
-            <div className="flex-1">
-              <div className="flex flex-col gap-16">
+            <div className="flex-1 flex flex-col gap-16">
                 {categories.map(
                   (category) =>
                     category.products.length > 0 && (
@@ -47,7 +46,6 @@ export default async function Home() {
                       />
                     ),
                 )}
-              </div>
             </div>
           </div>
         </div>
