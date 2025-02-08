@@ -7,22 +7,17 @@ import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { useIngredients } from "@/shared/hooks/use-ingredients";
 import { useSet } from "react-use";
-import qs from "qs";
-import { useRouter } from "next/navigation"; // важно!
-import { mapPizzaType, pizzaSizes, pizzaTypes } from "@/shared/constants/pizza";
+import { useRouter, useSearchParams } from "next/navigation"; // важно!
+import { pizzaSizes, pizzaTypes } from "@/shared/constants/pizza";
+import { PriceProps, useFilters } from "@/shared/hooks";
 
 interface Props {
   className?: string;
 }
 
-interface PriceProps {
-  priceFrom: number;
-  priceTo: number;
-}
-
 export const Filters: React.FC<Props> = ({ className }) => {
+
   const { ingredients, isLoading, onAddId, selectedIds } = useIngredients();
-  const router = useRouter();
 
   const [prices, setPrices] = useState<PriceProps>({
     priceFrom: 0,
@@ -39,19 +34,7 @@ export const Filters: React.FC<Props> = ({ className }) => {
     });
   };
 
-  // useEffect(() => {
-  //   const filters = {
-  //     ...prices,
-  //     pizzaTypes: Array.from(pizzaTypes),
-  //     sizes: Array.from(sizes),
-  //     ingredients: Array.from(selectedIds),
-  //   };
-
-  //   const query = qs.stringify(filters, { arrayFormat: "comma" });
-
-  //   router.push(`?${query}`, { scroll: false });
-  // }, [sizes, pizzaTypes, prices, selectedIds]);
-
+  useFilters({ selectedIds, prices, sizes, pizzaType });
 
   const items = ingredients.map((el) => ({
     name: String(el.name),

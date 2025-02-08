@@ -1,9 +1,12 @@
+'use client'
+
 import React from "react";
 import Link from "next/link";
 import { Ingredient } from "@prisma/client";
 import { Title } from "./title";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface ProductCardProps {
   id: number;
@@ -22,9 +25,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
   ingredients,
   className,
 }) => {
+
   return (
     <div className={className}>
-      <Link href={`/product/${id}`}>
+      <Link href={`/product/${id}`} scroll={false}>
         <div className="flex justify-center p-6 bg-secondary rounded-lg h-[260px]">
           <img src={imageUrl} alt={name} className="w-[215px] h-[215px]" />
         </div>
