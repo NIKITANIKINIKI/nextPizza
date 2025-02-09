@@ -39,8 +39,8 @@ export const findPizza= async (searchParams: GetSearchParams) =>{
                             in:pizzaTypesArray
                         },
                         price:{
-                            gte: Number(priceFrom) ?? 1000,
-                            lte: Number(priceTo) ?? 0,
+                            gte: Number(priceFrom ?? 1000),
+                            lte: Number(priceTo ?? 0),
                         }
                     }
                 }
@@ -50,8 +50,8 @@ export const findPizza= async (searchParams: GetSearchParams) =>{
                 items: {
                   where: {
                     price: {
-                      gte: Number(priceFrom) ?? 1000,
-                      lte:  Number(priceTo) ?? 0,
+                      gte: Number(priceFrom ?? 1000),
+                      lte: Number(priceTo ?? 0),
                     },
                   },
                   orderBy: {
