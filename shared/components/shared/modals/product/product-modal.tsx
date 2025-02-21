@@ -1,18 +1,16 @@
 "use client";
 import { FC } from "react";
-import { Dialog, DialogContent } from "../../ui";
+import { Dialog, DialogContent } from "../../../ui";
 import { useRouter } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 import { ProductWithRelations } from "@/@types/prisma";
-import { ProductContent } from "../product-content";
+import { ProductContent } from "../../product-content";
 
 interface ProductModalProps {
-  className?: string;
   product: ProductWithRelations;
 }
 
-export const ProductModal: FC<ProductModalProps> = ({ className, product }) => {
+export const ProductModal: FC<ProductModalProps> = ({ product }) => {
   const router = useRouter();
 
   return (
@@ -23,10 +21,9 @@ export const ProductModal: FC<ProductModalProps> = ({ className, product }) => {
       defaultOpen={false}
     >
       <DialogContent
-        className={cn(
-          "flex  justify-center max-w-[1300px] max-h-[750px] overflow-hidden border-none  ",
-          className,
-        )}
+        className={
+          "flex  justify-center max-w-[1300px] max-h-[750px] overflow-hidden border-none "
+        }
       >
         <ProductContent product={product} />
       </DialogContent>

@@ -4,6 +4,7 @@ import { Categories } from "./categories";
 import { SortPopup } from "./sort-popup";
 import { Container } from "./container";
 import { Category } from "@prisma/client";
+import { useAnchorStore } from "@/store/anchor";
 
 interface Props {
   categories: Category[];
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export const TopBar: React.FC<Props> = ({ className, categories }) => {
+
   return (
     <div
       className={cn(

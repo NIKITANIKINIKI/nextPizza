@@ -1,6 +1,8 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useEffect, useRef } from "react";
 import qs from "qs";
+import { useCategoryStore } from "@/store/category";
+import { useAnchorStore } from "@/store/anchor";
 
 export interface PriceProps {
   priceFrom: number;
@@ -19,6 +21,7 @@ export function useFilters(filters: FiltersType) {
 
   const router = useRouter();
   const pathname = usePathname();
+  const { anchor } = useAnchorStore();
 
   const isRoot = pathname === "/";
 
@@ -33,10 +36,9 @@ export function useFilters(filters: FiltersType) {
 
       const query = qs.stringify(params, { arrayFormat: "comma" });
 
-      const hash = typeof window !== "undefined" ? window.location.hash : "";
-      router.push(`?${query}${hash}`, { scroll: false });
+      router.push(`?${query}#${anchor}`);
     }
 
     isMounted.current = true;
-  }, [filters]);
+  }, [filters, anchor]);
 }

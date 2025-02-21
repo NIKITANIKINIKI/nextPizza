@@ -1,2 +1,2 @@
-export * from './modals'
-export {Providers} from './providers'
+export * from "./modals/product";
+export { Providers } from "./providers";

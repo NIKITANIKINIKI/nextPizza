@@ -1,13 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Title } from "./title";
 import { Input } from "../ui/input";
 import { RangeSlider } from "./range-slider";
 import { CheckboxFiltersGroup } from "./checkbox-filters-group";
 import { useIngredients } from "@/shared/hooks/use-ingredients";
 import { useSet } from "react-use";
-import { useRouter, useSearchParams } from "next/navigation"; // важно!
 import { pizzaSizes, pizzaTypes } from "@/shared/constants/pizza";
 import { PriceProps, useFilters } from "@/shared/hooks";
 
