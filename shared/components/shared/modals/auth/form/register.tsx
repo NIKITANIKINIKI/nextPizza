@@ -7,6 +7,7 @@ import { TFormRegister, formRegisterSchema } from "./schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, DialogTitle } from "@/shared/components/ui";
 import toast from "react-hot-toast";
+import { registerUser } from "@/app/actions";
 import { signIn } from "next-auth/react";
 
 interface RegisterProps {
@@ -14,7 +15,6 @@ interface RegisterProps {
 }
 
 export const Register: FC<RegisterProps> = ({ onClose }) => {
-
   const form = useForm<TFormRegister>({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
@@ -24,21 +24,12 @@ export const Register: FC<RegisterProps> = ({ onClose }) => {
       confirmPassword: "",
     },
   });
-
   const onSubmit = async (data: TFormRegister) => {
-
     try {
-      const {confirmPassword, ...loginData}=data
-      const res = await signIn("credentials", { 
-        ...loginData,
-        redirect: false,
-      });
+      const { confirmPassword, ...registerData } = data;
+      await registerUser(registerData);
 
-      if (!res?.ok) {
-        throw new Error();
-      }
       onClose();
-
       toast.success("Вы успешно зарегистрировались");
     } catch {
       toast.error("Произошла ошибка");
@@ -51,10 +42,14 @@ export const Register: FC<RegisterProps> = ({ onClose }) => {
         className="w-full flex flex-col gap-3"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        
         <FormInput
           name="fullName"
           label="Полное имя"
+          placeholder="Введите полное имя "
+        />
+        <FormInput
+          name="email"
+          label="Почта"
           placeholder="Введите полное имя "
         />
         <FormInput
@@ -69,7 +64,7 @@ export const Register: FC<RegisterProps> = ({ onClose }) => {
           type="password"
           placeholder="Введите пароль еще раз "
         />
-        <Button disabled={form.formState.isSubmitting}>
+        <Button disabled={form.formState.isSubmitting} type="submit">
           Зарегистрироваться
         </Button>
       </form>
