@@ -5,29 +5,53 @@ import { FormInput } from "../../../form/form-input";
 import { FormProvider, useForm } from "react-hook-form";
 import { TFormRegister, formRegisterSchema } from "./schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button } from "@/shared/components/ui";
-
+import { Button, DialogTitle } from "@/shared/components/ui";
+import toast from "react-hot-toast";
+import { signIn } from "next-auth/react";
 
 interface RegisterProps {
   onClose: () => void;
 }
 
-export const Register: FC<RegisterProps> = () => {
-  const methods = useForm();
+export const Register: FC<RegisterProps> = ({ onClose }) => {
 
   const form = useForm<TFormRegister>({
     resolver: zodResolver(formRegisterSchema),
     defaultValues: {
+      fullName: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: TFormRegister) => {
+
+    try {
+      const {confirmPassword, ...loginData}=data
+      const res = await signIn("credentials", { 
+        ...loginData,
+        redirect: false,
+      });
+
+      if (!res?.ok) {
+        throw new Error();
+      }
+      onClose();
+
+      toast.success("Вы успешно зарегистрировались");
+    } catch {
+      toast.error("Произошла ошибка");
+    }
+  };
 
   return (
-    <FormProvider {...methods}>
-      <form className="w-full flex flex-col gap-3">
+    <FormProvider {...form}>
+      <form
+        className="w-full flex flex-col gap-3"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
+        
         <FormInput
           name="fullName"
           label="Полное имя"

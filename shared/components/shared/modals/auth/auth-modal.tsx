@@ -1,6 +1,12 @@
 "use client";
 
-import { Button, Dialog, DialogContent } from "@/shared/components/ui";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+} from "@/shared/components/ui";
+import { Title } from "../../title";
 import { FC, useState } from "react";
 import { Register } from "./form/register";
 import { Login } from "./form/login";
@@ -12,7 +18,6 @@ interface AuthModalProps {
 }
 
 export const AuthModal: FC<AuthModalProps> = ({ isOpen, onClose }) => {
-  const { data: session } = useSession();
   const [type, setType] = useState<"login" | "register">("login");
 
   const onChangeType = () => {
@@ -24,6 +29,26 @@ export const AuthModal: FC<AuthModalProps> = ({ isOpen, onClose }) => {
       <DialogContent className={"w-[530px] p-10 border-none"}>
         <div className="w-[450px]">
           <div className="w-[400px] bg-white p-10 rounded-lg flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+              <div className="mr-2">
+                <DialogTitle className="flex flex-col gap-2">
+                  <Title
+                    text="Вход в аккаунт"
+                    size="md"
+                    className="font-bold"
+                  />
+                  <p className="text-gray-400">
+                    Введите свои данные, чтобы войти в аккаунт
+                  </p>
+                </DialogTitle>
+              </div>
+              <img
+                src="/assets/images/phone-icon.png"
+                alt="phone-icon"
+                width={60}
+                height={60}
+              />
+            </div>
             {type === "login" ? (
               <Login onClose={onClose} />
             ) : (

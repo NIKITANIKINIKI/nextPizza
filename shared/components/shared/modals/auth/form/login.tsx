@@ -2,17 +2,19 @@
 
 import { FC } from "react";
 import { Title } from "../../../title";
-import { Button, Input } from "@/shared/components/ui";
+import { Button, DialogTitle } from "@/shared/components/ui";
 import { FormInput } from "../../../form/form-input";
 import { FormProvider, useForm } from "react-hook-form";
 import { formLoginSchema, TFormLogin } from "./schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 
 interface LoginProps {
   onClose: () => void;
 }
 
-export const Login: FC<LoginProps> = () => {
+export const Login: FC<LoginProps> = ({ onClose }) => {
   const form = useForm<TFormLogin>({
     resolver: zodResolver(formLoginSchema),
     defaultValues: {
@@ -21,7 +23,23 @@ export const Login: FC<LoginProps> = () => {
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: TFormLogin) => {
+    try {
+      const res = await signIn("credentials", {
+        ...data,
+        redirect: false,
+      });
+
+      if (!res?.ok) {
+        throw new Error();
+      }
+      onClose();
+
+      toast.success("Вы успешно вошли");
+    } catch {
+      toast.error("Произошла ошибка");
+    }
+  };
 
   return (
     <FormProvider {...form}>
@@ -29,20 +47,6 @@ export const Login: FC<LoginProps> = () => {
         className="w-full flex flex-col gap-3"
         onSubmit={form.handleSubmit(onSubmit)}
       >
-        <div className="flex justify-between items-center">
-          <div className="mr-2">
-            <Title text="Вход в аккаунт" size="md" className="font-bold" />
-            <p className="text-gray-400">
-              Введите свою почту, чтобы войти в свой аккаунт
-            </p>
-          </div>
-          <img
-            src="/assets/images/phone-icon.png"
-            alt="phone-icon"
-            width={60}
-            height={60}
-          />
-        </div>
         <FormInput
           name="email"
           placeholder="Введите полное имя "
