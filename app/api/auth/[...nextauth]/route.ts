@@ -5,7 +5,7 @@ import { prisma } from "@/prisma/prisma-client";
 import { compare, hashSync } from "bcrypt";
 import { UserRole } from "@prisma/client";
 
-const handler:AuthOptions = NextAuth({
+const handler = NextAuth({
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_ID ?? "",
@@ -50,9 +50,9 @@ const handler:AuthOptions = NextAuth({
           return null;
         }
 
-        if (!findUser.verified) {
-          return null; // проверка на активацию
-        }
+        // if (!findUser.verified) {
+        //   return null; // проверка на активацию
+        // }
 
         return {
           id: String(findUser.id),
