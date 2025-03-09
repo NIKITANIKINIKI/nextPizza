@@ -29,7 +29,7 @@ export const Login: FC<LoginProps> = ({ onClose }) => {
         ...data,
         redirect: false,
       });
-
+      ////
       if (!res?.ok) {
         throw new Error();
       }
